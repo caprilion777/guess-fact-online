@@ -13,11 +13,11 @@ const io = new Server(server, {
 });
 
 // Статические файлы
-app.use(express.static(path.join(__dirname, 'calculator')));
+app.use(express.static(__dirname));
 
 // Главная страница
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'calculator', 'guess-the-fact-online.html'));
+  res.sendFile(path.join(__dirname, 'guess-the-fact-online.html'));
 });
 
 // Хранение игр
@@ -128,7 +128,7 @@ io.on('connection', (socket) => {
 
       const roundResult = {
         fact: currentFact,
-        author: factAuthor.name,
+        author: factAuthor ? factAuthor.name : '',
         correct: correct,
         wrong: wrong,
         guesses: game.guesses
@@ -225,4 +225,4 @@ setInterval(() => {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-}); 
+});
